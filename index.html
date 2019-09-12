@@ -6,6 +6,45 @@
   </head>
 
   <body>
-    <h1>Hello World!</h1>
+    <!-- Heading -->
+    <h1>My Note</h1>
+
+    <!-- Notepad -->
+    <div id="notepad" contenteditable></div>
+
+    <!-- FilerJS Browser Filesystem Library -->
+    <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
+
+    <script>
+      // Initialize filesystem
+      const fs = new Filer.FileSystem();
+
+      // DOM content loaded event
+      window.addEventListener("DOMContentLoaded", event => {
+        console.log("DOM fully loaded and parsed");
+
+        // Read UTF8 text file
+        fs.readFile("/note", "utf8", function(err, data) {
+          if (err) {
+            document.querySelector("#notepad").innerHTML =
+              "Welcome to my notepad!";
+          } else {
+            document.querySelector("#notepad").innerHTML = data;
+          }
+        });
+
+        // Refresh notepad every 5 seconds
+        window.setInterval("writeNotepad()", 5000);
+
+        // Write UTF8 text file
+        function writeNotepad() {
+          fs.writeFile("/note", data, function(err) {
+            if (err) throw err;
+          });
+
+          document.querySelector("#notepad").innerHTML = data;
+        }
+      });
+    </script>
   </body>
 </html>
