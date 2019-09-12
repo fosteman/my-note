@@ -34,15 +34,14 @@
         });
 
         // Refresh notepad every 5 seconds
-        window.setInterval("writeNotepad()", 5000);
+        window.setInterval(writeNotepad, 5000);
 
         // Write UTF8 text file
         function writeNotepad() {
+          data = document.querySelector("#notepad").innerHTML;
           fs.writeFile("/note", data, function(err) {
             if (err) throw err;
           });
-
-          document.querySelector("#notepad").innerHTML = data;
         }
       });
     </script>
