@@ -1,0 +1,25 @@
+body {
+  /* Background pattern from Toptal Subtle Patterns */
+  background-image: url("../images/lightpaperfibers.png");
+  font-family: "Roboto Slab", serif;
+}
+
+h1 {
+  margin-left: 25px;
+  margin-top: 25px;
+  margin-bottom: 5px;
+}
+
+h4 {
+  margin-left: 25px;
+  margin-top: 5px;
+}
+
+#editor {
+  width: 50%;
+  margin: 25px;
+}
+
+#notepad {
+  margin: 25px;
+}

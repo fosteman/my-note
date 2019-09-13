@@ -4,21 +4,42 @@
     <meta charset="utf-8" />
     <title>My Note</title>
     <link rel="stylesheet" href="styles/main.css" />
+
+    <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap"
       rel="stylesheet"
+    />
+
+    <!-- Trix CSS-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/trix@1.2.0/dist/trix.css"
     />
   </head>
 
   <body>
     <!-- Heading -->
     <h1>My Note <i class="far fa-edit"></i></h1>
+    <h4>A web based note taking app</h4>
 
-    <!-- Notepad -->
-    <div id="notepad" contenteditable></div>
+    <!-- Trix Editor -->
+    <div id="editor">
+      <form>
+        <input id="notepad" value="" type="hidden" name="content" />
+        <trix-editor input="notepad"></trix-editor>
+      </form>
+    </div>
 
     <!-- Font Awesome Kit -->
     <script src="https://kit.fontawesome.com/e282ee2045.js"></script>
+
+    <!-- Trix Library -->
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/trix@1.2.0/dist/trix.js"
+    ></script>
 
     <!-- FilerJS Browser Filesystem Library -->
     <script src="https://unpkg.com/filer/dist/filer.min.js"></script>
@@ -31,13 +52,16 @@
       window.addEventListener("DOMContentLoaded", event => {
         console.log("DOM fully loaded and parsed");
 
+        // Select Trix
+        const element = document.querySelector("trix-editor");
+
         // Read UTF8 text file
         fs.readFile("/note", "utf8", function(err, data) {
           if (err) {
-            document.querySelector("#notepad").innerHTML =
-              "Welcome to my notepad!";
+            element.editor.setSelectedRange([0, 0]);
+            element.editor.insertString("Welcome to my notepad!");
           } else {
-            document.querySelector("#notepad").innerHTML = data;
+            element.editor.loadJSON(JSON.parse(data));
           }
         });
 
@@ -46,7 +70,7 @@
 
         // Write UTF8 text file
         function writeNotepad() {
-          data = document.querySelector("#notepad").innerHTML;
+          const data = JSON.stringify(element.editor);
           fs.writeFile("/note", data, function(err) {
             if (err) throw err;
           });
