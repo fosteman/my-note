@@ -16,10 +16,12 @@ h4 {
 }
 
 #editor {
-  width: 50%;
   margin: 25px;
+  max-width: 80%;
 }
 
 #notepad {
-  margin: 25px;
+  box-shadow: 5px 5px darkslategrey;
+  width: auto;
+  min-width: available;
 }
